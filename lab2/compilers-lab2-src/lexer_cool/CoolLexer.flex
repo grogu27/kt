@@ -23,9 +23,7 @@ unsigned_integer  {digit}+
 hex_integer       ${hex_digit}{hex_digit}*
 exponent          e[+-]?{digit}+
 i                 {unsigned_integer}
-real              ({i}\.{i}?|{i}?\.{i}){exponent}?
-string            \"(\\|\\t|\\n|\\f|\\b|[^\n\"\\])*\"
-
+string  (\"(\\|\\t|\\n|\\f|\\b|[^\n\"\\])*\"|\"(\\|\\t|\\n|\\f|\\b|[^\n\"\\])*\\\n?[^\n\"\\]*\")
 
 %x COMMENT
 
@@ -38,9 +36,10 @@ string            \"(\\|\\t|\\n|\\f|\\b|[^\n\"\\])*\"
 
 "(*)"                 BEGIN(COMMENT);
 <COMMENT>"*)"        BEGIN(INITIAL);
-<COMMENT>.            { /* skip*/ }
-<COMMENT>\n           { lineno++; }
-<COMMENT><<EOF>>      Error("EOF in comment");
+<COMMENT>.           { /* skip everything inside comment */ }
+<COMMENT>\n          { yylineno++; }  
+<COMMENT><<EOF>>     Error("EOF in comment");  
+
 
 
 
@@ -100,13 +99,13 @@ SELF_TYPE            return TOKEN_IDENTIFIER_SELFTYPE;
 [*/+\-,^.;:()\[\]]   return yytext[0];
 
 {white_space}        { /* skip spaces */ }
-\n                   lineno++;
+
 .                    Error("unrecognized character");
 
 %%
 
 void CoolLexer::Error(const char* msg) const
 {
-    std::cerr << "Lexer error (line " << lineno << "): " << msg << ": lexeme '" << YYText() << "'\n";
+    std::cerr << "Lexer error (line " << yylineno << "): " << msg << ": lexeme '" << YYText() << "'\n";
     std::exit(YY_EXIT_FAILURE);
 }

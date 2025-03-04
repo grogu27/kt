@@ -32,10 +32,29 @@ class Main inherits IO {  -- class  inherits
         not (x > 10) and true or false
     };
 
-    * comment
-                     * 
+    (* comment   (*   dual comment      *)
+              Hello world       *) 
        
     main(): Object {  
         out_string("Testing Cool lexer\n")  
     };
+    (* abc (* *) -- dsf
+  -- comm 
+    *)
+
+    (*
+    * Example app.
+    *
+    *)
+
+    -- This is a class
+
+    "String (* hello *)"
+
+    "Str"
+
+    "Multiline string \
+    Hello"
+
+    "Hello\n"
 };
