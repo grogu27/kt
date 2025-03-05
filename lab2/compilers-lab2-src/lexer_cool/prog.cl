@@ -43,10 +43,12 @@ class Main inherits IO {  -- class  inherits
     *)
 
     (*
-    * Example app.
+    * (*Example app.*)
     *
     *)
-
+    
+    --"hello
+   
     -- This is a class
 
     "String (* hello *)"
@@ -57,4 +59,10 @@ class Main inherits IO {  -- class  inherits
     Hello"
 
     "Hello\n"
+
+
+    (*
+    * (*Example app.*)
+    *
+    *)
 };
