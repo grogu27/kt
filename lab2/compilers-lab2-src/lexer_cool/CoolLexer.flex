@@ -25,7 +25,7 @@ exponent          e[+-]?{digit}+
 i                 {unsigned_integer}
 string  (\"(\\|\\t|\\n|\\f|\\b|[^\n\"\\])*\"|\"(\\|\\t|\\n|\\f|\\b|[^\n\"\\])*\\\n?[^\n\"\\]*\")
 
-%x COMMENT
+%x COMMENT COMMENT2
 
 %option warn nodefault batch noyywrap c++
 %option yylineno
@@ -33,15 +33,15 @@ string  (\"(\\|\\t|\\n|\\f|\\b|[^\n\"\\])*\"|\"(\\|\\t|\\n|\\f|\\b|[^\n\"\\])*\\
 
 %%
 
-
-"(*)"                 BEGIN(COMMENT);
-<COMMENT>"*)"        BEGIN(INITIAL);
+"(*"                 {comment_level++; BEGIN(COMMENT);}
+<COMMENT>"*)"        {comment_level--; if (comment_level == 0) BEGIN(INITIAL);}
+<COMMENT>"(*"        {comment_level++;}
 <COMMENT>.           { /* skip everything inside comment */ }
-<COMMENT>\n          { yylineno++; }  
+<COMMENT>\n          {}  
 <COMMENT><<EOF>>     Error("EOF in comment");  
-
-
-
+"--"                 BEGIN(COMMENT2);
+<COMMENT2>.           { /* skip everything inside comment */ }
+<COMMENT2>\n          BEGIN(INITIAL);
 
 class                return TOKEN_KW_CLASS;
 and                  return TOKEN_LOGICAL_OPERATOR_AND;
@@ -88,7 +88,7 @@ SELF_TYPE            return TOKEN_IDENTIFIER_SELFTYPE;
 
 
 
-
+{unsigned_integer}{alpha}+ Error("Invalid identifier (identifier cannot start with a digit)");
 {unsigned_integer}   return TOKEN_UNSIGNED_INTEGER;
 
 {string}             return TOKEN_STRING;
@@ -100,7 +100,7 @@ SELF_TYPE            return TOKEN_IDENTIFIER_SELFTYPE;
 
 {white_space}        { /* skip spaces */ }
 
-.                    Error("unrecognized character");
+.                    Error("Unrecognized character");
 
 %%
 
