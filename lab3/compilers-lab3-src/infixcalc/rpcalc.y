@@ -16,8 +16,9 @@ void yyerror(char const *);
 %token NUM
 %left '-' '+'
 %left '*' '/'
-%precedence NEG /* negation--unary minus */
 %right '^' /* exponentiation */
+%precedence NEG /* negation--unary minus */
+
 
 %%
 
@@ -37,13 +38,13 @@ exp:
 | exp '-' exp  { $$ = $1 - $3; }
 | exp '*' exp  { $$ = $1 * $3; }
 | exp '/' exp  { 
-    if ($3 == 0.0 || $3 == 0){
+    if (fabs($3) < 2.2e-308){ //fabs($3) < DBL_MIN
         yyerror("Division by zero");
         YYABORT;
     }
     $$ = $1 / $3; }
-| '-' exp %prec NEG { $$ = -$2; }  /* Unary minus */
 | exp '^' exp  { $$ = pow($1, $3); } /* Exponentiation */
+| '-' exp %prec NEG{ $$ = -$2; }  /* Unary minus */
 | '(' exp ')'  { $$ = $2; }
 ;
 
