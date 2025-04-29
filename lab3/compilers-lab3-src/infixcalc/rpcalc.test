@@ -40,7 +40,7 @@ run()
     fi
 
 
-    rm -f res res-err "$TESTFILE"
+    rm -f res res-err res_status "$TESTFILE"
 }
 
 cat >input <<EOF
@@ -91,6 +91,11 @@ EOF
 run 0 -10
 
 cat >input <<EOF
+5 + -5 * 2
+EOF
+run 0 -5
+
+cat >input <<EOF
 -5 * -2
 EOF
 run 0 10
@@ -103,7 +108,12 @@ run 0 1
 cat >input <<EOF
 -5^2 + 2
 EOF
-run 0 -23
+run 0 27
+
+cat >input <<EOF
+2^2^3
+EOF
+run 0 256
 
 cat >input <<EOF
 10 / 0 + 1
