@@ -1,0 +1,117 @@
+ #1
+ _program
+   #1
+   _class
+     Main
+     Object
+     "<stdin>"
+     (
+     #3
+     _attr
+       y
+       Int
+       #3
+       _int
+         4
+       : _no_type
+     #7
+     _method
+       string_test
+       String
+       #9
+       _string
+         "Hello, Cool!"
+       : _no_type
+     #15
+     _method
+       test
+       Object
+       #17
+       _let
+         x
+         Int
+         #17
+         _int
+           3
+         : _no_type
+         #19
+         _cond
+           #19
+           _lt
+             #19
+             _object
+               x
+             : _no_type
+             #19
+             _int
+               5
+             : _no_type
+           : _no_type
+           #21
+           _loop
+             #21
+             _comp
+               #21
+               _eq
+                 #21
+                 _object
+                   x
+                 : _no_type
+                 #21
+                 _int
+                   0
+                 : _no_type
+               : _no_type
+             : _no_type
+             #21
+             _assign
+               x
+               #21
+               _sub
+                 #21
+                 _object
+                   x
+                 : _no_type
+                 #21
+                 _int
+                   1
+                 : _no_type
+               : _no_type
+             : _no_type
+           : _no_type
+           #25
+           _object
+             x
+           : _no_type
+         : _no_type
+       : _no_type
+     )
+   #35
+   _class
+     A
+     Object
+     "<stdin>"
+     (
+     )
+   #37
+   _class
+     B
+     A
+     "<stdin>"
+     (
+     #39
+     _method
+       string_test
+       String
+       #41
+       _string
+         "Hello, World!"
+       : _no_type
+     )
+   #47
+   _class
+     C
+     B
+     "<stdin>"
+     (
+     )

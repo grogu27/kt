@@ -6,6 +6,7 @@
 #include <string>
 #include "stringtab.h"
 #include "utilities.h"
+#include "stringtab.h" 
 #include "cool-parse.h"
 
 /* Max size of string constants */
@@ -128,6 +129,9 @@ DIGIT           [0-9]
     return ERROR;
 }
 
+ /* meet a "\\0" ??? */
+
+
  /* meet a '\n' in the middle of a string without a '\\', error */
 <STRING>\n {
     yylval.error_msg = "Unterminated string constant";
@@ -136,11 +140,10 @@ DIGIT           [0-9]
     return ERROR;
 }
 
- /* meet a "\\0" ??? */
 <STRING>\\0 {
     yylval.error_msg = "Unterminated string constant";
     BEGIN 0;
-    //curr_lineno++;
+    curr_lineno++;
     return ERROR;
 }
 
@@ -193,7 +196,7 @@ DIGIT           [0-9]
     }
 
     /* TODO */
-
+    cool_yylval.symbol = stringtable.add_string(const_cast<char*>(output.c_str()));
     BEGIN 0;
     return STR_CONST;
 
@@ -278,8 +281,10 @@ f(?i:alse) {
 
  /* TYPEID */
 [A-Z][A-Za-z0-9_]* {
-    /* TODO*/
-    return TYPEID;
+    // Добавление типа в таблицу идентификаторов
+    Symbol s = idtable.add_string(yytext);
+    cool_yylval.symbol = s;
+    return TYPEID;  // Возвращаем лексему для типа
 }
 
  /* To treat lines. */

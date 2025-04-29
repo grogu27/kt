@@ -72,6 +72,7 @@ public:
    Elem *lookup(int index);      // lookup an element using its index
    Elem *lookup_string(char *s); // lookup an element using its string
    void print();                 // print table
+   void print(std::ostream& out);
 };
 
 class IdTable : public StringTable<IdEntry> { };
@@ -151,6 +152,12 @@ template <class Elem>
 void StringTable<Elem>::print()
 {
     list_print(std::cerr, tbl);
+}
+
+template <class Elem>
+void StringTable<Elem>::print(std::ostream& out)
+{
+    list_print(out, tbl);
 }
 
 #endif

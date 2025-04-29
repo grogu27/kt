@@ -3,6 +3,7 @@
 #include "cool-tree.h"
 #include "utilities.h"
 #include "cool-parse.h"
+#include <fstream>  
 
 std::FILE *token_file = stdin;
 extern Classes parse_results;
@@ -40,8 +41,40 @@ int main(int argc, char **argv)
         }
 
         /* TODO: dump AST tree (ast_root) to std::cerr */
+        if (ast_root)
+        {
+            ast_root->dump_with_types(std::cerr, 1);
 
-        std::fclose(token_file);
+            std::ofstream out4("out/ast.txt");
+            if (out4.is_open()) {
+                ast_root->dump_with_types(out4, 1);
+                out4.close();
+        }
+        }
+           
+        else
+            std::cerr << "Error: ast_root is NULL\n";
+
+        std::ofstream out("out/stringtable.txt");
+        if (out.is_open()){
+            stringtable.print(out);
+            out.close();
+        }
+
+        std::ofstream out2("out/inttable.txt");
+        if (out2.is_open()){
+           
+            inttable.print(out2);
+            out2.close();
+        }
+
+        std::ofstream out3("out/idtable.txt");
+        if (out3.is_open()){
+            
+            idtable.print(out3);
+            out3.close();
+        }
+         //booltable.print(out);
     }
 
     return 0;
