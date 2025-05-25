@@ -1,0 +1,113 @@
+ #1
+ _program
+   #1
+   _class
+     A
+     Object
+     "<stdin>"
+     (
+     #3
+     _attr
+       val
+       Int
+       #48
+       _no_expr
+       : _no_type
+     #9
+     _method
+       getVal
+       Int
+       #9
+       _object
+         val
+       : _no_type
+     )
+   #15
+   _class
+     B
+     A
+     "<stdin>"
+     (
+     #17
+     _attr
+       bval
+       String
+       #9
+       _no_expr
+       : _no_type
+     #19
+     _method
+       getBval
+       String
+       #19
+       _object
+         bval
+       : _no_type
+     )
+   #25
+   _class
+     Main
+     Object
+     "<stdin>"
+     (
+     #27
+     _method
+       main
+       Object
+       #29
+       _let
+         x
+         Int
+         #29
+         _int
+           1
+         : _no_type
+         #29
+         _let
+           y
+           String
+           #29
+           _string
+             "Hello"
+           : _no_type
+           #29
+           _block
+             #31
+             _dispatch
+               #31
+               _object
+                 self
+               : _no_type
+               out_string
+               (
+               #31
+               _object
+                 y
+               : _no_type
+               )
+             : _no_type
+             #33
+             _dispatch
+               #33
+               _object
+                 self
+               : _no_type
+               out_int
+               (
+               #33
+               _plus
+                 #33
+                 _object
+                   x
+                 : _no_type
+                 #33
+                 _int
+                   2
+                 : _no_type
+               : _no_type
+               )
+             : _no_type
+           : _no_type
+         : _no_type
+       : _no_type
+     )
